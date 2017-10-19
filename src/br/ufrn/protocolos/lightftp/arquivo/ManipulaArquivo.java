@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ManipulaArquivo {
+	
+	public static String DIRETORIO_REMOTO_PRINCIPAL = "D:/Users/f043684/Desktop/Pessoal/engSoftware/lightftp/remoto";
+	public static String DIRETORIO_REMOTO_CLIENTE = "/cliente01";
+	public static String DIRETORIO_LOCAL_CLIENTE = "D:/Users/f043684/Desktop/Pessoal/engSoftware/lightftp/local";
 
 	public static byte[] transformaArquivoEmBytes(File arquivo) {
 		int len = (int) arquivo.length();
