@@ -18,20 +18,16 @@ public class Cliente {
 
 		DataOutputStream outBytes = new DataOutputStream(socket.getOutputStream());
 		
-		String mensagem = new RequisicaoDownloadArquivo().preparaMensagemRequisicao("protocolo.txt");
+		RequisicaoDownloadArquivo requisicaoDownloadArquivo = new RequisicaoDownloadArquivo("protocolo.txt");
+		String mensagem = requisicaoDownloadArquivo.preparaMensagemRequisicao();
 		outBytes.write(mensagem.getBytes());
 
 		DataInputStream inBytes = new DataInputStream(socket.getInputStream());
 		byte[] data = new byte[1024];
 		inBytes.read(data);
 		
-		String mensagemRecebida = new String(data);		
-		String[] dadosMensagem = mensagemRecebida.split("\n");	
-		String[] strBytesArquivo = dadosMensagem[1].split(";");	
-		
-		byte[] bytesArquivo;
-		
-		System.out.println(mensagemRecebida);
+		requisicaoDownloadArquivo.recebeDados(data);
+		requisicaoDownloadArquivo.criaArquivo();
 
 		socket.close();
 	}
