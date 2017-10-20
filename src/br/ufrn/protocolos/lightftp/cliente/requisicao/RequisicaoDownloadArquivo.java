@@ -29,7 +29,6 @@ public class RequisicaoDownloadArquivo extends RequisicaoGenerica {
 	public String preparaMensagemRequisicao() {
 		mensagemRequisicao = "";
 		mensagemRequisicao = TipoRequisicao.SOLICITACAO_DOWNLOAD_ARQUIVO + "\n";
-		mensagemRequisicao += ManipulaArquivo.DIRETORIO_REMOTO_CLIENTE + "\n"; 
 		mensagemRequisicao += nomeArquivo;
 		return mensagemRequisicao;
 	}
@@ -51,7 +50,6 @@ public class RequisicaoDownloadArquivo extends RequisicaoGenerica {
 			j++;
 			i++;
 		}	
-		System.out.println("teste");
 	}
 	
 	public void criaArquivo() throws IOException {

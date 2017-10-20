@@ -6,7 +6,6 @@ public class RequisicaoGenerica {
 	protected String mensagemRequisicao;
 	protected String mensagemResposta;
 	protected String tipoRequisicao;
-	protected String diretorioRemotoCliente;
 	protected String[] dadosMensagem;
 	
 	public RequisicaoGenerica() {
@@ -28,7 +27,6 @@ public class RequisicaoGenerica {
 	
 	public void entenderMensagemRequisicao() {
 		dadosMensagem = mensagemRequisicao.split("\n");
-		tipoRequisicao = dadosMensagem[0];
-		diretorioRemotoCliente = dadosMensagem[1];		
+		tipoRequisicao = dadosMensagem[0];	
 	}
 }
