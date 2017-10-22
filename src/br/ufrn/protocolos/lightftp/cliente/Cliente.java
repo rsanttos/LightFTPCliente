@@ -1,12 +1,10 @@
 package br.ufrn.protocolos.lightftp.cliente;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import br.ufrn.protocolos.lightftp.cliente.requisicao.RequisicaoDownloadArquivo;
 import br.ufrn.protocolos.lightftp.cliente.requisicao.RequisicaoUploadArquivo;
 
 public class Cliente {
@@ -18,8 +16,9 @@ public class Cliente {
 
 		DataOutputStream outBytes = new DataOutputStream(socket.getOutputStream());
 		
-		RequisicaoUploadArquivo requisicaoUploadArquivo = new RequisicaoUploadArquivo("/home/ramonsantos/dev/engSoftware/workspace/LightFTPCliente/teste.txt");
-		outBytes.write(requisicaoUploadArquivo.preparaBytesRequisicao());
+		RequisicaoUploadArquivo requisicaoUploadArquivo = new RequisicaoUploadArquivo("arquivorecebido.txt");
+		byte[] dados = requisicaoUploadArquivo.preparaBytesRequisicao();
+		outBytes.write(dados);
 
 //		DataInputStream inBytes = new DataInputStream(socket.getInputStream());
 //		byte[] data = new byte[1024];

@@ -2,28 +2,34 @@ package br.ufrn.protocolos.lightftp.cliente.requisicao;
 
 import java.io.File;
 
-import br.ufrn.protocolos.lightftp.arquivo.ManipulaArquivo;
+import br.com.servico.manipulaarquivo.Arquivo;
+import br.com.servico.mensagem.MensagemServico;
 
 public class RequisicaoUploadArquivo extends RequisicaoGenerica {
 
 	private String nomeArquivo;
+	private int tamanhoArquivo;
+	private byte[] bytesArquivo;
+	
+	private MensagemServico mensagemServico;
 	
 
 	public RequisicaoUploadArquivo(String nomeArquivo) {
 		super();
 		this.nomeArquivo = nomeArquivo;
-		preparaMensagemRequisicao();
+		this.mensagemServico = new MensagemServico();
 	}
 
 	public RequisicaoUploadArquivo(String status, String mensagemRequisicao, String nomeArquivo) {
 		super(status, mensagemRequisicao);
-		// TODO Auto-generated constructor stub
+		this.mensagemServico = new MensagemServico();
 	}
 
-	private void preparaMensagemRequisicao() {
+	private String preparaCabecalho() {
 		mensagemRequisicao = "";
 		mensagemRequisicao += TipoRequisicao.SOLICITACAO_UPLOAD_ARQUIVO + "\n";
-		mensagemRequisicao += nomeArquivo;
+		mensagemRequisicao += nomeArquivo + "\n";
+		return mensagemRequisicao;
 	}
 
 	
@@ -35,24 +41,15 @@ public class RequisicaoUploadArquivo extends RequisicaoGenerica {
 	}
 
 	public byte[] preparaBytesRequisicao() {
+		String cabecalho = preparaCabecalho();
 		File arquivoParaEnvio = new File(nomeArquivo);
-		byte[] bytesArquivo = ManipulaArquivo.transformaArquivoEmBytes(arquivoParaEnvio);
-		byte[] bytesRequisicao = concatenaArraysBytes(mensagemRequisicao.getBytes(), bytesArquivo);
+		byte[] bytesArquivo = Arquivo.fileToByte(arquivoParaEnvio);
+		
+		cabecalho += bytesArquivo.length + "\n";
+		
+		byte[] bytesRequisicao = mensagemServico.concatenaArraysBytes(cabecalho.getBytes(), bytesArquivo);
+
 		return bytesRequisicao;
 	}
 	
-	public byte[] concatenaArraysBytes(byte[] inicio, byte[] fim) {
-		byte[] arrayCompleto = new byte[inicio.length + fim.length];
-		
-		for(int i = 0 ; i < inicio.length ; i++) {
-			arrayCompleto[i] = inicio[i];
-		}
-		
-		int i = inicio.length;
-		for(int j = 0 ; j < fim.length ; j++, i++) {
-			arrayCompleto[i] = fim[j];
-		} 
-		
-		return arrayCompleto;
-	}
 }

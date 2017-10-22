@@ -2,11 +2,19 @@ package br.ufrn.protocolos.lightftp.cliente.main;
 
 import java.io.IOException;
 
-import br.ufrn.protocolos.lightftp.cliente.Cliente;
+import br.ufrn.protocolos.lightftp.cliente.servico.RequisicaoUploadArquivoService;
 
 public class ClienteMain {
 	public static void main(String[] args) throws IOException {
-		Cliente cliente = new Cliente();
-		cliente.inicializaCliente();
+		// RequisicaoDownloadArquivoService requisicaoDownloadArquivoService = new
+		// RequisicaoDownloadArquivoService("casa.jpg");
+		// requisicaoDownloadArquivoService.realizaRequisicao();
+
+		RequisicaoUploadArquivoService requisicaoUploadService = new RequisicaoUploadArquivoService("casa.jpg");
+		requisicaoUploadService.realizaRequisicao();
+
+		// RequisicaoListaArquivosService requisicaoListaArquivosService = new
+		// RequisicaoListaArquivosService();
+		// requisicaoListaArquivosService.realizaRequisicao();
 	}
 }

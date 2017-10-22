@@ -1,5 +1,9 @@
 package br.ufrn.protocolos.lightftp.cliente.requisicao;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 public class RequisicaoGenerica {
 	
 	protected String status;
@@ -28,5 +32,14 @@ public class RequisicaoGenerica {
 	public void entenderMensagemRequisicao() {
 		dadosMensagem = mensagemRequisicao.split("\n");
 		tipoRequisicao = dadosMensagem[0];	
+	}
+
+	
+	public void recebeResposta(Socket socket) throws IOException {
+		DataInputStream inBytes = new DataInputStream(socket.getInputStream());
+		byte[] data = new byte[128];
+		inBytes.read(data);
+		String mensagemRecebida = new String(data).trim();
+		System.out.println(mensagemRecebida);		
 	}
 }

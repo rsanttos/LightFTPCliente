@@ -7,14 +7,16 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import br.ufrn.protocolos.lightftp.cliente.requisicao.RequisicaoDownloadArquivo;
+import br.ufrn.protocolos.lightftp.cliente.requisicao.RequisicaoUploadArquivo;
 
-public class RequisicaoDownloadArquivoService {
+
+public class RequisicaoUploadArquivoService {
 	
 	private String nomeArquivo;
 	
 	private static int LIMITE_TAMANHO_ARQUIVO = 2000000;
 	
-	public RequisicaoDownloadArquivoService(String nomeArquivo) {
+	public RequisicaoUploadArquivoService(String nomeArquivo) {
 		super();
 		this.nomeArquivo = nomeArquivo;
 	}
@@ -27,16 +29,10 @@ public class RequisicaoDownloadArquivoService {
 
 		DataOutputStream outBytes = new DataOutputStream(socket.getOutputStream());
 		
-		RequisicaoDownloadArquivo requisicaoDownloadArquivo = new RequisicaoDownloadArquivo(nomeArquivo);
-		String mensagem = requisicaoDownloadArquivo.preparaMensagemRequisicao();
-		outBytes.write(mensagem.getBytes());
-
-		DataInputStream inBytes = new DataInputStream(socket.getInputStream());
-		byte[] data = new byte[LIMITE_TAMANHO_ARQUIVO];
-		inBytes.read(data);
+		RequisicaoUploadArquivo requisicaoUploadArquivo = new RequisicaoUploadArquivo(nomeArquivo);
+		outBytes.write(requisicaoUploadArquivo.preparaBytesRequisicao());
 		
-		requisicaoDownloadArquivo.recebeDados(data);
-		requisicaoDownloadArquivo.criaArquivo();
+		requisicaoUploadArquivo.recebeResposta(socket);
 
 		socket.close();
 	}
